@@ -1,0 +1,14 @@
+{
+  "name": "guessthisnbaplayer",
+  "version": "1.0.0",
+  "description": "NBA 선수 트리비아 힌트를 보고 누구인지 맞추는 게임 — 힌트를 적게 볼수록 고득점, 글로벌 리더보드 지원",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}

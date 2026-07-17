@@ -1,0 +1,323 @@
+/* Guess This NBA Player — 농구 코트 테마 다크 UI */
+
+:root {
+  --bg: #12100e;
+  --bg-card: #1e1a17;
+  --bg-elevated: #2a241f;
+  --border: #3a322b;
+  --text: #f5efe8;
+  --text-muted: #a89a8c;
+  --orange: #f97316;
+  --orange-bright: #fb923c;
+  --green: #4ade80;
+  --red: #f87171;
+  --gold: #fbbf24;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background:
+    radial-gradient(ellipse at 50% -20%, rgba(249, 115, 22, 0.15), transparent 60%),
+    var(--bg);
+  color: var(--text);
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', system-ui, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+}
+
+main {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+  flex: 1;
+}
+
+.site-header {
+  text-align: center;
+  padding: 36px 16px 20px;
+}
+
+.site-header h1 {
+  font-size: 1.9rem;
+  letter-spacing: -0.02em;
+}
+
+.tagline { color: var(--text-muted); margin-top: 4px; }
+
+.site-footer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  padding: 20px;
+}
+
+.hidden { display: none !important; }
+.muted { color: var(--text-muted); }
+
+/* 카드 */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.card h2 { font-size: 1.15rem; margin-bottom: 14px; }
+
+.rules { padding-left: 20px; margin-bottom: 20px; }
+.rules li { margin-bottom: 6px; }
+.rules strong { color: var(--orange-bright); }
+
+/* 버튼 */
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.06s ease, filter 0.15s ease;
+  white-space: nowrap;
+}
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--orange), #ea580c);
+  color: #fff;
+}
+.btn-primary:hover:not(:disabled) { filter: brightness(1.12); }
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+.btn-ghost:hover:not(:disabled) { border-color: var(--orange); color: var(--text); }
+.btn-danger:hover:not(:disabled) { border-color: var(--red); color: var(--red); }
+
+.btn-big { width: 100%; padding: 14px; font-size: 1.05rem; }
+
+/* 게임 상단 */
+.game-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.pill {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.pill-score { color: var(--gold); }
+
+.potential-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.potential-score {
+  color: var(--orange-bright);
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+/* 힌트 진행 점 */
+.hint-dots { display: flex; gap: 6px; margin-bottom: 16px; }
+.hint-dots span {
+  height: 6px;
+  flex: 1;
+  border-radius: 3px;
+  background: var(--bg-elevated);
+}
+.hint-dots span.on { background: var(--orange); }
+
+/* 힌트 목록 */
+.hint-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+
+.hint-list li {
+  background: var(--bg-elevated);
+  border-left: 3px solid var(--orange);
+  border-radius: 8px;
+  padding: 12px 14px;
+  animation: hint-in 0.35s ease;
+}
+
+.hint-list li .hint-no {
+  color: var(--orange-bright);
+  font-weight: 800;
+  font-size: 0.8rem;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.hint-list.small li { padding: 8px 12px; font-size: 0.88rem; }
+
+@keyframes hint-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* 피드백 */
+.feedback {
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-weight: 700;
+  animation: hint-in 0.25s ease;
+}
+.feedback.wrong { background: rgba(248, 113, 113, 0.12); color: var(--red); }
+.feedback.info { background: rgba(251, 191, 36, 0.1); color: var(--gold); }
+
+/* 입력 + 자동완성 */
+.guess-row { display: flex; gap: 10px; }
+
+.guess-row input, .autocomplete-wrap input {
+  width: 100%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 1rem;
+  font-family: inherit;
+  padding: 11px 14px;
+  outline: none;
+}
+.guess-row input:focus { border-color: var(--orange); }
+
+.autocomplete-wrap { position: relative; flex: 1; }
+
+.autocomplete {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  list-style: none;
+  max-height: 240px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.autocomplete li {
+  padding: 9px 14px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.autocomplete li .en { color: var(--text-muted); font-size: 0.85rem; }
+.autocomplete li:hover, .autocomplete li.active { background: rgba(249, 115, 22, 0.18); }
+
+.secondary-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+
+/* 모달 */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 100;
+}
+
+.modal {
+  width: 100%;
+  max-width: 460px;
+  text-align: center;
+  animation: hint-in 0.25s ease;
+}
+
+.result-emoji { font-size: 3rem; margin-bottom: 6px; }
+.result-player { font-size: 1.4rem; font-weight: 800; color: var(--orange-bright); margin: 6px 0; }
+
+.modal details { margin: 14px 0; text-align: left; }
+.modal summary { cursor: pointer; color: var(--text-muted); margin-bottom: 8px; }
+.modal .btn-big { margin-top: 8px; }
+
+/* 게임 종료 */
+.final-card { text-align: center; }
+
+.final-score {
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1.2;
+}
+.final-score-max { font-size: 1.2rem; color: var(--text-muted); font-weight: 600; }
+
+.round-summary {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  font-size: 0.9rem;
+}
+.round-summary th, .round-summary td {
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--border);
+}
+.round-summary th { color: var(--text-muted); font-weight: 600; }
+.round-summary .ok { color: var(--green); }
+.round-summary .fail { color: var(--red); }
+
+#submit-block .guess-row { margin: 8px 0; }
+#submit-block input { flex: 1; }
+
+.submit-result {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--green);
+  margin: 12px 0;
+}
+
+/* 리더보드 */
+.leaderboard-box { min-height: 60px; }
+
+.lb-table { width: 100%; border-collapse: collapse; }
+.lb-table th, .lb-table td {
+  padding: 8px 6px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.92rem;
+}
+.lb-table th { color: var(--text-muted); font-weight: 600; }
+.lb-table td.rank { width: 44px; font-weight: 800; }
+.lb-table td.score { text-align: right; font-weight: 800; color: var(--gold); }
+.lb-table td.date { text-align: right; color: var(--text-muted); font-size: 0.8rem; }
+.lb-table tr.top1 .rank { color: var(--gold); }
+.lb-table tr.top2 .rank { color: #cbd5e1; }
+.lb-table tr.top3 .rank { color: #d97706; }
+
+#view-over .leaderboard-box { text-align: left; margin-bottom: 16px; }
+
+@media (max-width: 520px) {
+  .site-header h1 { font-size: 1.5rem; }
+  .card { padding: 18px; }
+  .guess-row { flex-direction: column; }
+  .secondary-actions { flex-direction: column; gap: 8px; }
+  .secondary-actions .btn { width: 100%; }
+  .lb-table td.date { display: none; }
+  .lb-table th:last-child { display: none; }
+}

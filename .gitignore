@@ -1,0 +1,4 @@
+node_modules/
+data/leaderboard.json
+data/leaderboard.json.tmp
+.DS_Store

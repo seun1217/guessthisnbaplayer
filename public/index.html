@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이 NBA 선수는 누구? 🏀</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏀</text></svg>" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>🏀 이 NBA 선수는 누구?</h1>
+    <p class="tagline">힌트를 적게 보고 맞출수록 점수가 커집니다</p>
+  </header>
+
+  <main>
+    <!-- 홈 화면 -->
+    <section id="view-home" class="view">
+      <div class="card intro-card">
+        <h2>게임 방법</h2>
+        <ul class="rules">
+          <li>한 게임은 <strong>5라운드</strong>, 라운드마다 NBA 선수 한 명이 출제됩니다.</li>
+          <li>힌트는 최대 <strong>5개</strong>까지 하나씩 공개됩니다.</li>
+          <li>힌트 1개만 보고 맞추면 <strong>100점</strong>, 힌트가 늘수록 80 → 60 → 40 → <strong>20점</strong>으로 줄어듭니다.</li>
+          <li>오답을 내면 다음 힌트가 자동으로 공개됩니다. 5번째 힌트에서 틀리면 그 라운드는 0점!</li>
+          <li>최종 점수로 <strong>글로벌 리더보드</strong>에 도전하세요. (만점 500점)</li>
+        </ul>
+        <button id="btn-start" class="btn btn-primary btn-big">게임 시작</button>
+      </div>
+
+      <div class="card">
+        <h2>🏆 글로벌 리더보드</h2>
+        <div id="home-leaderboard" class="leaderboard-box">
+          <p class="muted">불러오는 중...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 게임 화면 -->
+    <section id="view-game" class="view hidden">
+      <div class="game-top">
+        <span id="round-label" class="pill">라운드 1 / 5</span>
+        <span id="score-label" class="pill pill-score">총점 0</span>
+      </div>
+
+      <div class="card">
+        <div class="potential-row">
+          <span>지금 맞추면</span>
+          <span id="potential-score" class="potential-score">+100점</span>
+        </div>
+        <div class="hint-dots" id="hint-dots" aria-hidden="true"></div>
+        <ol id="hint-list" class="hint-list"></ol>
+
+        <p id="feedback" class="feedback hidden"></p>
+
+        <div class="guess-row">
+          <div class="autocomplete-wrap">
+            <input id="guess-input" type="text" autocomplete="off"
+              placeholder="선수 이름 입력 (한글/영문)" aria-label="선수 이름" />
+            <ul id="autocomplete" class="autocomplete hidden"></ul>
+          </div>
+          <button id="btn-guess" class="btn btn-primary">정답 제출</button>
+        </div>
+
+        <div class="secondary-actions">
+          <button id="btn-hint" class="btn btn-ghost">다음 힌트 보기</button>
+          <button id="btn-giveup" class="btn btn-ghost btn-danger">이 라운드 포기</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 라운드 결과 모달 -->
+    <div id="round-modal" class="modal-backdrop hidden">
+      <div class="modal card">
+        <div id="round-result-emoji" class="result-emoji">🎉</div>
+        <h2 id="round-result-title">정답!</h2>
+        <p id="round-result-player" class="result-player"></p>
+        <p id="round-result-detail" class="muted"></p>
+        <details id="round-result-hints-wrap">
+          <summary>이 선수의 힌트 전체 보기</summary>
+          <ol id="round-result-hints" class="hint-list small"></ol>
+        </details>
+        <button id="btn-next-round" class="btn btn-primary btn-big">다음 라운드</button>
+      </div>
+    </div>
+
+    <!-- 게임 종료 화면 -->
+    <section id="view-over" class="view hidden">
+      <div class="card final-card">
+        <h2>게임 종료!</h2>
+        <p class="final-score"><span id="final-score">0</span><span class="final-score-max"> / 500점</span></p>
+        <p id="final-summary" class="muted"></p>
+        <table class="round-summary">
+          <thead><tr><th>라운드</th><th>선수</th><th>결과</th><th>점수</th></tr></thead>
+          <tbody id="round-summary-body"></tbody>
+        </table>
+
+        <div id="submit-block">
+          <div class="guess-row">
+            <input id="nickname-input" type="text" maxlength="16" placeholder="리더보드에 올릴 닉네임" aria-label="닉네임" />
+            <button id="btn-submit-score" class="btn btn-primary">리더보드 등록</button>
+          </div>
+          <p id="submit-feedback" class="feedback hidden"></p>
+        </div>
+        <p id="submit-result" class="submit-result hidden"></p>
+
+        <div id="over-leaderboard" class="leaderboard-box"></div>
+        <button id="btn-restart" class="btn btn-ghost btn-big">다시 하기</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>선수 51명 · 힌트가 적을수록 고득점 · Guess This NBA Player</p>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
