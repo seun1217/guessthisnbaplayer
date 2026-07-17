@@ -39,11 +39,19 @@ npm test
 ## 구조
 
 ```
-server.js          # 의존성 없는 Node HTTP 서버 (API + 정적 파일)
-data/players.js    # 선수 51명 × 힌트 5개 (어려운 순) + 허용 별칭
-public/            # 프론트엔드 (바닐라 JS SPA)
-test.js            # 통합 테스트
+server.js                # 의존성 없는 Node HTTP 서버 (API + 정적 파일)
+data/players.js          # 선수 데이터 인덱스 (총 200명 × 힌트 5개, 어려운 순 + 허용 별칭)
+data/players-legends.js  # 클래식 레전드 (1950~80년대 초)
+data/players-8090s.js    # 1980~90년대 스타
+data/players-2000s.js    # 2000년대 스타
+data/players-2010s.js    # 2010년대 스타
+data/players-current.js  # 현역 스타
+public/                  # 프론트엔드 (바닐라 JS SPA)
+test.js                  # 통합 테스트
 ```
+
+서버는 시작 시 선수 데이터를 검증합니다: 힌트 개수(정확히 5개), 선수 id 중복,
+그리고 정규화된 이름/별칭이 서로 다른 선수와 충돌하지 않는지 확인하며, 문제가 있으면 즉시 실패합니다.
 
 ### 설계 포인트
 

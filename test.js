@@ -25,7 +25,7 @@ async function api(path, options) {
 
 async function run() {
   // --- 데이터 무결성 ---
-  assert.ok(PLAYERS.length >= 50, '선수는 50명 이상이어야 함');
+  assert.ok(PLAYERS.length >= 200, '선수는 200명 이상이어야 함');
   for (const p of PLAYERS) {
     assert.strictEqual(p.hints.length, 5, `${p.id}: 힌트 5개`);
     assert.ok(p.ko && p.name, `${p.id}: 이름 필수`);

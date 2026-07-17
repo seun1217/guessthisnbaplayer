@@ -1,6 +1,7 @@
 // NBA 선수 데이터베이스
 // 각 선수는 5개의 힌트를 가지며, hints[0]이 가장 어렵고 hints[4]가 가장 쉽다.
 // aliases: 정답 판정 시 허용되는 추가 표기 (대소문자/공백/부호는 서버에서 정규화됨)
+// 이 파일의 목록 외에 시대별 파일(players-*.js)이 아래에서 합쳐진다.
 
 const PLAYERS = [
   {
@@ -668,4 +669,19 @@ const PLAYERS = [
   },
 ];
 
-module.exports = { PLAYERS };
+const { PLAYERS_LEGENDS } = require('./players-legends');
+const { PLAYERS_8090S } = require('./players-8090s');
+const { PLAYERS_2000S } = require('./players-2000s');
+const { PLAYERS_2010S } = require('./players-2010s');
+const { PLAYERS_CURRENT } = require('./players-current');
+
+module.exports = {
+  PLAYERS: [
+    ...PLAYERS,
+    ...PLAYERS_LEGENDS,
+    ...PLAYERS_8090S,
+    ...PLAYERS_2000S,
+    ...PLAYERS_2010S,
+    ...PLAYERS_CURRENT,
+  ],
+};

@@ -31,7 +31,10 @@ function normalizeAnswer(s) {
 }
 
 const answerIndex = new Map(); // 정규화된 표기 -> player id
+const seenIds = new Set();
 for (const p of PLAYERS) {
+  if (seenIds.has(p.id)) throw new Error(`선수 id 중복: ${p.id}`);
+  seenIds.add(p.id);
   if (p.hints.length !== MAX_HINTS) {
     throw new Error(`${p.id}: 힌트는 정확히 ${MAX_HINTS}개여야 합니다`);
   }
