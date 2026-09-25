@@ -36,6 +36,41 @@ npm test
 
 게임 시작 → 오답/힌트/포기/정답 → 게임 종료 → 리더보드 등록까지 전체 흐름을 검증하는 통합 테스트가 실행됩니다.
 
+## 배포
+
+의존성이 없어서 Dockerfile 하나로 어디든 배포할 수 있습니다. 헬스체크 엔드포인트는 `GET /api/health`입니다.
+
+### Render (추천 — 블루프린트 원클릭)
+
+저장소에 포함된 `render.yaml`이 블루프린트 역할을 합니다.
+
+1. [dashboard.render.com](https://dashboard.render.com) → **New → Blueprint** → 이 GitHub 저장소 연결
+2. 끝. 자동으로 빌드·배포되고, `/var/data` 디스크에 리더보드가 영구 저장됩니다.
+
+> 무료로 시작하려면 `render.yaml`에서 `plan: free`로 바꾸고 `disk` 블록과 `GTNP_DATA_DIR`를 지우세요. 대신 재배포 시 리더보드가 초기화됩니다.
+
+### Railway
+
+1. [railway.app](https://railway.app) → **New Project → Deploy from GitHub repo** (Dockerfile 자동 감지)
+2. 리더보드 유지가 필요하면: 서비스에 **Volume**을 추가해 `/var/data`에 마운트하고, 환경 변수 `GTNP_DATA_DIR=/var/data`를 설정
+
+### Fly.io
+
+```bash
+fly launch --no-deploy          # Dockerfile 자동 감지
+fly volumes create gtnp_data --size 1
+# fly.toml에 [mounts] source="gtnp_data" destination="/var/data" 추가 후
+fly secrets set GTNP_DATA_DIR=/var/data
+fly deploy
+```
+
+### 환경 변수
+
+| 변수 | 기본값 | 설명 |
+|---|---|---|
+| `PORT` | `3000` | 서버 포트 (대부분의 플랫폼이 자동 주입) |
+| `GTNP_DATA_DIR` | `./data` | 리더보드 JSON이 저장되는 디렉터리. 영구 볼륨을 마운트한 경로로 지정 |
+
 ## 구조
 
 ```
