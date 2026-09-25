@@ -32,6 +32,13 @@ async function run() {
   }
   console.log(`✓ 선수 데이터 ${PLAYERS.length}명 무결성 확인`);
 
+  // --- 헬스체크 ---
+  const health = await api('/api/health');
+  assert.strictEqual(health.status, 200);
+  assert.strictEqual(health.data.ok, true);
+  assert.strictEqual(health.data.players, PLAYERS.length);
+  console.log('✓ GET /api/health');
+
   // --- 선수 목록 API ---
   const players = await api('/api/players');
   assert.strictEqual(players.status, 200);

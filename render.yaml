@@ -1,0 +1,20 @@
+# Render 블루프린트 — 저장소를 Render에 연결하면 이 설정으로 자동 배포된다.
+# https://render.com/docs/blueprint-spec
+#
+# 리더보드 영구 저장을 위해 디스크를 마운트한다 (디스크는 starter 플랜 이상 필요).
+# 무료로 시작하려면: plan을 free로 바꾸고 disk 블록과 GTNP_DATA_DIR를 삭제하면 된다.
+# 단, 무료 플랜은 재배포/재시작 시 리더보드가 초기화된다.
+
+services:
+  - type: web
+    name: guessthisnbaplayer
+    runtime: docker
+    plan: starter
+    healthCheckPath: /api/health
+    envVars:
+      - key: GTNP_DATA_DIR
+        value: /var/data
+    disk:
+      name: leaderboard-data
+      mountPath: /var/data
+      sizeGB: 1

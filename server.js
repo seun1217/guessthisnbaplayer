@@ -232,6 +232,11 @@ function serveStatic(req, res, urlPath) {
 // ---------- API 라우팅 ----------
 
 async function handleApi(req, res, urlPath) {
+  // GET /api/health — 배포 플랫폼 헬스체크용
+  if (req.method === 'GET' && urlPath === '/api/health') {
+    return sendJson(res, 200, { ok: true, players: PLAYERS.length });
+  }
+
   // GET /api/players — 자동완성용 이름 목록 (정답 유추에 쓰일 힌트 정보는 제외)
   if (req.method === 'GET' && urlPath === '/api/players') {
     return sendJson(res, 200, PLAYERS.map((p) => ({ name: p.name, ko: p.ko })));
